@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: pod
+metadata:
+  name: expense
+
+
+
+## A Namespace in Kubernetes is a way to logically divide a cluster into separate, isolated environments. It allows different teams, projects, or applications to operate independently within the same cluster.
+# creating a namespace
+# kubectl create namespace expense ( creating a namespace with the command)
+# kubectl apply -f namespace.yaml ( with the .yaml file)
+
+
+## commands
+# kubectl get namespaces        ( get all the namespaces in the cluster)
+# kubectl get pods -n my-namespace  ( get the pods withing the cluster)
+# kubectl delete namespace my-namespace ( delete the namespace)

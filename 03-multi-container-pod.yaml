@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: pod
+metadata:
+  name: Multi-container
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      ports:
+        - containerPort: 80
+    - name: sidecar-container 
+      image: log-collector
+
+
+
+# A Container is a lightweight, portable runtime environment for an application. Multi-container pods contain multiple containers that share resources.
+

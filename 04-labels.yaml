@@ -1,0 +1,22 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: labels
+  labels:
+    - name: K8
+      purpose: training 
+      trainer: shiva
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      ports:
+        - containerPort : 80
+
+
+# Used to identify, group, and filter Kubernetes objects/pods/resources.
+
+
+# commands: 
+# kubectl get pods -l app=web
+# kubectl get pods -l app=web,env=production

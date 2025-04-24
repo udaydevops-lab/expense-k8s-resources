@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: pod
+metadata:
+  name: pod
+spec:
+  containers: 
+    - name: nginx-container
+      image: nginx
+
+
+## A Pod is the smallest and simplest deployable unit in Kubernetes that encapsulates one or more containers.
+
+## Commands
+# kubectl apply -f pod.yaml ( using this yaml file we can create a pod)
+
+# kubectl get pods (it will get the running pods)
+
+# kubectl describe pod my-pod ( provides detailed information about a specific Pod in a Kubernetes cluster )
+# we use this describe command in the (Debugging Issues, Checking Events, Monitoring Pod Health, Viewing Networking Details)
+
+# kubectl delete pod my-pod
