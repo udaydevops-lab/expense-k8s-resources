@@ -10,10 +10,10 @@ spec:
       component: frontend
       environment: dev
   ports:
-    protocol: TCP
-    port: 80
-    targetPort: 80 #target-port
-    nodePort: 32761
+    - protocol: TCP
+      port: 80
+      targetPort: 80 #target-port
+      nodePort: 32761
 
 
 # Browser
