@@ -1,4 +1,4 @@
-### Method 1: values defined in config-map pod calling with the Individual Keys
+### Method 1: Individual Keys from ConfigMap
 
 apiVersion: v1
 kind: Pod
@@ -9,23 +9,22 @@ spec:
     - name: individual-key-pod
       image: nginx:latest
       ports:
-      - containerPort: 80
+        - containerPort: 80
       env:
-      - name: course
-        valueFrom: 
-          configMapKeyRef:
-            name: config-map
-            key: course
-      - name: trainer
-        valueFrom:
-          configMapKeyRef:
-            name: config-map
-            key: trainer
-
-
-### Method 2: values defined in config-map pod calling with the envFrom "Bulk Load" (all keys)
+        - name: course
+          valueFrom: 
+            configMapKeyRef:
+              name: config-map
+              key: course
+        - name: trainer
+          valueFrom:
+            configMapKeyRef:
+              name: config-map
+              key: trainer
 
 ---
+
+### Method 2: Bulk Load All Keys from ConfigMap
 
 apiVersion: v1
 kind: Pod
@@ -39,7 +38,7 @@ spec:
         - containerPort: 80
       envFrom:
         - configMapRef:
-          name: config-map
+            name: config-map
 
 
 
