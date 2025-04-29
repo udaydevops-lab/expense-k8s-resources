@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: nginx-container
-          image: nginx:latest
+          image: nginx:stable-perl
           ports:
             - containerPort: 80   # Optional but good for clarit
 
