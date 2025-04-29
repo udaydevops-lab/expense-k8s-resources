@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: ReplicaSet-pod
+  name: replicaSet-pod
   # these labels belongs to replicaset resource
   labels:
     app: nginx
