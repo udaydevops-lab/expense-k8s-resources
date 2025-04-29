@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: annotations-pod
-  lables: 
+  labels: 
     course: devops
     trainer: siva
   annotations:
@@ -14,10 +14,10 @@ spec:
       image: nginx:latest 
 
 
-## lables:
+## labels:
 ##### For filtering, selecting, grouping used for Services, Deployments, CLI filtering
 
-## lables: annotations
+## labels: annotations
 ##### For extra metadata not used by K8s itself used for CI/CD info, monitoring tools, documentation, tracking
 
 ## kubectl get pods -l course=devops
