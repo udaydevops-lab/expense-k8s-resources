@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment                # Deployment name
+  labels:
+    app: nginx
+    purpose: deployment
+    tier: web
+spec:
+  replicas: 3         # Number of pod replicas
+  selector:
+    matchLabels:       # Should match with the pod labels exactly
+      app: nginx
+      tier: web
+      project: test-project
+  template:
+    metadata:
+      labels:           # Labels assigned to pods
+        app: nginx
+        tier: web
+        project: test-project
+        extra-key: extra-value
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80   # Optional but good for clarit
+
+---
+
+# --- Service Resource ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service       # Service name
+spec:
+  type: NodePort            # Exposes service on Node IP:NodePort
+  selector:                 # Select pods with these labels
+    app: nginx
+    tier: web
+    project: test-project
+  ports:
+    - protocol: TCP
+      port: 80              # Service port
+      targetPort: 80        # Container port
+      nodePort: 30080       # Externally accessible port (in range 30000-32767)
+

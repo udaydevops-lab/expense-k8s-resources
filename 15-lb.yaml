@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-lb-service
+spec:
+  type: LoadBalancer
+  selector:
+    labels:
+      name: frontend
+      project: expense
+      component: frontend
+      environment: dev
+  ports:
+    protocol: TCP
+    port: 80
+    targetPort: 80 #target-port
+    nodePort: 32761
+
+
+# Browser
+#    ↓
+# External LoadBalancer Public IP / DNS (AWS ELB)
+#    ↓
+# Forward request to NodePort on EC2
+#    ↓
+# NodePort Service forwards to Pod (nginx app)
+#    ↓
+# Application Response

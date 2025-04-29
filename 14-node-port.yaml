@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-port-service   # Service name
+spec:
+  type: NodePort             #  NodePort Type for External access 
+  selector:
+    labels:                  # labels to target the pods
+      name: frontend
+      project: expense
+      component: frontend
+      environment: dev
+  ports:
+    - protocol: TCP          # Communication protocol (TCP)
+      port: 80               # Service exposed port (inside cluster)
+      targetPort: 80         # Pod/container port
+      nodePort: 32760        # Node IP లో access చేయడానికి assign చేసిన external port (range 30000-32767)
+
+
+## NodePort service exposes pods externally using Node IP and a reserved static port between 30000-32767, allowing users to access the application from outside the Kubernetes cluster.
+
+## Browser → Node Public IP:nodePort → Kubernetes NodePort Service → Pod → Application (nginx)
+
+# Browser (You)
+#    |
+#    ↓
+# http://13.234.45.67:31555
+#    |
+#    ↓
+# Node Public IP: nodePort (Kubernetes NodePort Service)
+# Kubernetes NodePort Service (port 80 → targetPort 80)
+#    |
+#    ↓
+# Selects Pod (Matching Labels app: nginx)
+#    |
+#    ↓
+# Inside Pod → nginx Application running on port 80

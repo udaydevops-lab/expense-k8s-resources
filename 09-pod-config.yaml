@@ -1,0 +1,59 @@
+### Method 1: values defined in config-map pod calling with the Individual Keys
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: single-key-pod
+spec:
+  containers:
+    - name: Individual-key-pod
+      image: nginx:latest
+      ports:
+      - containerPort: 80
+      env:
+      - name: course
+        valueFrom: 
+          configMapKeyRef:
+            name: config-map
+            key: course
+      - name: trainer
+        valueFrom:
+          configMapKeyRef:
+            name: config-map
+            key: trainer
+
+
+### Method 2: values defined in config-map pod calling with the envFrom "Bulk Load" (all keys)
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bulk-load-pod
+spec:
+  containers:
+    - name: bulk-load-container
+      image: nginx:latest
+      ports:
+      - containerPort: 80
+    - envFrom:
+      - configMapRef:
+        name:  config-map
+
+
+
+## commands
+# # ConfigMap create 
+# kubectl apply -f config-map.yaml
+
+# # Pod apply 
+# kubectl apply -f pod.yaml
+# kubectl apply -f config-pod-1.yaml
+
+# # Env variables  
+# kubectl exec -it config-pod -- printenv course
+# kubectl exec -it config-pod -- printenv trainer
+
+# kubectl exec -it config-pod-1 -- printenv course
+# kubectl exec -it config-pod-1 -- printenv trainer

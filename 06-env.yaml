@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-test-pod
+  labels:
+    trainer: siva
+    course: devops
+  annotations:
+    kubernetes.io/created-by: 'udaydara'
+    jenkins.build.url: 'https://jenkins.prajai.online/expense/job/backend/54'
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      env:
+        - name: course
+          value: kubernetes
+        - name: duration
+          value: '20hours'
+
+
+# Commands
+
+# kubectl apply -f env-test.yaml
+# kubectl exec -it env-test-pod -- printenv
+
+# kubectl exec -it env-test-pod -- printenv course
+# kubectl exec -it env-test-pod -- printenv duration
+
+### Feature : env: in Pod     use case: Inject dynamic values (like configs, env types)

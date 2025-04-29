@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: ReplicaSet-pod
+  # these labels belongs to replicaset resource
+  labels:
+    app: nginx
+    tier: frontend
+spec:
+  replicas: 3 # modify replicas according to your case
+  selector:
+    matchLabels:           # Used by ReplicaSet to find and manage matching pods
+      tier: frontend
+      app: nginx
+  # below is pod definition
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        app: nginx
+        project: some-project
+    spec:
+      containers:
+        - name: nginx-container     
+          image: nginx:stable-perl
+
+## ReplicaSet is a controller that ensures a specified number of pod replicas are running at all times. It uses label selectors to identify which pods to manage and is primarily used in Deployments.
+
+## selector.matchLabels defines which Pods to manage. template.metadata.labels defines labels of Pods that will be created by the ReplicaSet. Both must match exactly for proper functionality.
