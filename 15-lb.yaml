@@ -5,7 +5,6 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    labels:
       name: frontend
       project: expense
       component: frontend
