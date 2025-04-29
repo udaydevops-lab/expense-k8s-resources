@@ -6,7 +6,7 @@ metadata:
   name: single-key-pod
 spec:
   containers:
-    - name: Individual-key-pod
+    - name: individual-key-pod
       image: nginx:latest
       ports:
       - containerPort: 80
