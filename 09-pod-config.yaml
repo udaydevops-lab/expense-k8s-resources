@@ -36,10 +36,10 @@ spec:
     - name: bulk-load-container
       image: nginx:latest
       ports:
-      - containerPort: 80
+        - containerPort: 80
       envFrom:
-      - configMapRef:
-        name:  config-map
+        - configMapRef:
+          name: config-map
 
 
 
