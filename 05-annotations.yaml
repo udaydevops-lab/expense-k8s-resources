@@ -25,5 +25,5 @@ spec:
 ## kubectl describe pod annotations
 
 ##Show Only Annotations
-## kubectl get pod annotations -o jsonpath="{.metadata.annotations}
+## kubectl get pod annotations-pod -o jsonpath="{.metadata.annotations}
 
