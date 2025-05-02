@@ -1,0 +1,82 @@
+# 1️⃣ PersistentVolume (PV) – Represents the actual EBS volume created in AWS
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ebs-static
+  labels:
+    purpose: ebs-static
+    project: expense
+spec:
+  accessModes:
+    - ReadWriteOnce               # Only one node can mount the volume in read-write mode
+  capacity:
+    storage: 10Gi                 # Size of the EBS volume
+  csi:
+    driver: ebs.csi.aws.com                   # AWS EBS CSI driver for integration
+    fsType: ext4                              # File system type for the volume
+    volumeHandle: vol-071b27f852a50e4d4       # The EBS volume ID from AWS
+  persistentVolumeReclaimPolicy: Retain       # Keep the volume even if PVC is deleted
+---
+
+# 2️⃣ PersistentVolumeClaim (PVC) – Pod uses this to claim the volume
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-static
+  labels:
+    purpose: ebs-static
+    project: expense
+spec:
+  storageClassName: ""           # Must be empty for static provisioning
+  volumeName: ebs-static         # Bind specifically to the PV we created above
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi               # Requesting only 5Gi (can be ≤ 10Gi of PV)
+
+---
+
+# 3️⃣ Pod – Mount the claimed volume inside the container
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ebs-static
+  labels:
+    purpose: ebs-static
+    project: expense
+spec:
+  containers:
+    - name: nginx-static
+      image: nginx:latest
+      volumeMounts:
+        - name: persistent-storage
+          mountPath: /usr/share/nginx/html  # Mount point inside the container
+  nodeSelector:
+    topology.kubernetes.io/zone: us-east-1c # Zone must match the EBS volume zone
+  volumes:
+    - name: persistent-storage
+      persistentVolumeClaim:
+        claimName: ebs-static
+
+--- 
+
+# 4️⃣ Service – Expose the pod using LoadBalancer type
+apiVersion: v1
+kind: Service
+metadata:
+  name: ebs-static
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-static
+    project: expense
+  ports:
+    - protocol: TCP
+      port: 80              # Port exposed to the user
+      targetPort: 80        # Port inside the container where nginx is listening
+
+
+
+
+

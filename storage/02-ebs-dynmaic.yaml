@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-dynamic
+spec:
+  storageClassName: expense-ebs  # Match the StorageClass above
+  accessModes:
+    - ReadWriteOnce  # Only one pod can write at a time
+  resources:
+    requests:
+      storage: 4Gi  # Requested size
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ebs-dynamic
+  labels:
+    purpose: ebs-dynamic
+    project: expense
+spec:
+  containers:
+    - name: ebs-dynamic
+      image: nginx:latest
+      volumeMounts:
+        - name: persistent-storage
+          mountPath: /usr/share/nginx/html  # Mount path in the container
+  volumes:
+    - name: persistent-storage
+      persistentVolumeClaim:  # <-- This was capitalized incorrectly
+        claimName: ebs-dynamic
+  nodeSelector:
+    topology.kubernetes.io/zone: us-east-1c  # Ensure pod runs in the same AZ as EBS
+
+
+  
+
+
+
+
